@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Italo Disco Seminararbeit – Glitter Academic</title>
+  <meta name="description" content="80er-Glitzer, seriöse Typographie: Italo-Disco-Seminararbeit als Website." />
+
+  <!-- Optional: Systemfonts (seriös, schnell). Du kannst später Google Fonts ergänzen. -->
+  <style>
+    :root{
+      /* Hintergrund: NICHT schwarz, eher “late 80s neon paper” */
+      --bg1: #fbf7ff;
+      --bg2: #f2fbff;
+      --bg3: #fff6f3;
+
+      --ink: #16161d;
+      --muted: #4a4a5a;
+
+      /* Neon-Akzente (sparsam!) */
+      --neon-pink: #ff3bd4;
+      --neon-cyan: #22d3ee;
+      --neon-violet:#8b5cf6;
+
+      --paper: rgba(255,255,255,.72);
+      --paper-strong: rgba(255,255,255,.86);
+      --border: rgba(22,22,29,.12);
+
+      --radius: 18px;
+      --shadow: 0 16px 48px rgba(10, 10, 20, .10);
+      --shadow-soft: 0 10px 30px rgba(10, 10, 20, .08);
+
+      --maxw: 1080px;
+    }
+
+    /* Basic reset */
+    *{ box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      color: var(--ink);
+      font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(255,59,212,.12), transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(34,211,238,.14), transparent 60%),
+        radial-gradient(900px 500px at 65% 85%, rgba(139,92,246,.10), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2) 40%, var(--bg3));
+      overflow-x:hidden;
+    }
+
+    /* Sparkle canvas sits behind content but above background */
+    #sparkles{
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .45;
+      mix-blend-mode: multiply;
+    }
+
+    /* Floating disco balls layer */
+    .disco-layer{
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Content layer */
+    .wrap{
+      position: relative;
+      z-index: 2;
+      min-height: 100%;
+    }
+
+    /* Top nav */
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(255,255,255,.82), rgba(255,255,255,.58));
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 10px 16px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items: baseline;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .brand strong{ font-weight: 750; letter-spacing: .2px; }
+    .badge{
+      font-size: 12px;
+      padding: 2px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.7);
+      box-shadow: 0 6px 16px rgba(0,0,0,.06);
+    }
+    .nav a{
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .nav a:hover{ color: var(--ink); }
+    .nav-links{ display:flex; gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+    .btn{
+      appearance:none;
+      border: 1px solid rgba(0,0,0,.12);
+      background: rgba(255,255,255,.85);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 28px rgba(0,0,0,.10); }
+    .btn:active{ transform: translateY(0); }
+    .btn.neon{
+      border-color: rgba(255,59,212,.35);
+      box-shadow:
+        0 12px 28px rgba(255,59,212,.10),
+        0 12px 28px rgba(34,211,238,.10);
+    }
+
+    /* Layout */
+    main{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 30px 16px 80px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+    }
+    @media (max-width: 920px){
+      main{ grid-template-columns: 1fr; }
+      .nav-inner{ align-items:flex-start; }
+    }
+
+    .card{
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px 18px;
+    }
+    .card.soft{ box-shadow: var(--shadow-soft); background: var(--paper-strong); }
+
+    /* Hero */
+    .hero h1{
+      margin: 6px 0 10px;
+      font-size: clamp(28px, 3.2vw, 44px);
+      line-height: 1.12;
+      letter-spacing: .2px;
+    }
+    .hero p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 62ch;
+    }
+    .hero .meta{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .chip{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.65);
+    }
+    .laser{
+      height: 2px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, var(--neon-pink), var(--neon-cyan), var(--neon-violet), transparent);
+      opacity: .75;
+      filter: blur(.2px);
+    }
+
+    /* TOC */
+    .toc ol{
+      margin: 10px 0 0;
+      padding-left: 20px;
+    }
+    .toc li{ margin: 6px 0; }
+    .toc a{ color: var(--ink); text-decoration: none; border-bottom: 1px dashed rgba(0,0,0,.25); }
+    .toc a:hover{ border-bottom-color: rgba(0,0,0,.55); }
+
+    /* Sections */
+    section{ scroll-margin-top: 80px; }
+    h2{
+      margin: 0 0 8px;
+      font-size: 22px;
+      letter-spacing: .2px;
+    }
+    .lead{
+      font-size: 16px;
+      color: var(--muted);
+      margin: 0 0 14px;
+    }
+    .two-col{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 14px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+    .sidebar{
+      border-radius: 14px;
+      background: rgba(255,255,255,.6);
+      border: 1px solid rgba(0,0,0,.08);
+      padding: 12px 12px;
+    }
+    .sidebar h3{
+      margin: 0 0 8px;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,.65);
+    }
+    .kv{ margin: 0; padding-left: 18px; }
+    .kv li{ margin: 6px 0; color: var(--muted); }
+
+    /* Track cards */
+    .tracks{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    @media (max-width: 640px){
+      .tracks{ grid-template-columns: 1fr; }
+    }
+    .track{
+      position: relative;
+      overflow:hidden;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(0,0,0,.10);
+      box-shadow: 0 12px 26px rgba(0,0,0,.08);
+    }
+    .track:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: linear-gradient(135deg, rgba(255,59,212,.35), rgba(34,211,238,.28), rgba(139,92,246,.25));
+      filter: blur(18px);
+      opacity: .35;
+      z-index: 0;
+    }
+    .track > *{ position: relative; z-index: 1; }
+    .track header{
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .track strong{ font-weight: 760; }
+    .track small{ color: rgba(0,0,0,.55); }
+    .track p{ margin: 6px 0 0; color: var(--muted); }
+
+    /* Footer */
+    footer{
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 16px 60px;
+      color: rgba(0,0,0,.60);
+    }
+
+    /* Disco balls (CSS) */
+    .disco{
+      position: absolute;
+      width: var(--size, 120px);
+      height: var(--size, 120px);
+      left: var(--x, 10%);
+      top: var(--y, 10%);
+      transform-origin: top center;
+      animation:
+        floaty var(--float, 9s) ease-in-out infinite,
+        swing var(--swing, 6.5s) ease-in-out infinite;
+      filter: drop-shadow(0 18px 22px rgba(0,0,0,.16));
+      opacity: var(--op, .7);
+    }
+    .disco::before{
+      /* “Kette” */
+      content:"";
+      position:absolute;
+      left: 50%;
+      top: -90px;
+      width: 2px;
+      height: 90px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, rgba(0,0,0,.15), rgba(0,0,0,.02));
+    }
+    .ball{
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, rgba(255,255,255,.95), rgba(255,255,255,.25) 22%, transparent 45%),
+        radial-gradient(circle at 60% 60%, rgba(34,211,238,.18), transparent 55%),
+        radial-gradient(circle at 40% 70%, rgba(255,59,212,.16), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,.08), rgba(0,0,0,0) 62%),
+        /* Kachel-Muster */
+        repeating-linear-gradient(0deg, rgba(0,0,0,.10), rgba(0,0,0,.10) 1px, transparent 1px, transparent 12px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.10), rgba(0,0,0,.10) 1px, transparent 1px, transparent 12px),
+        linear-gradient(135deg, rgba(255,255,255,.82), rgba(255,255,255,.42));
+      border: 1px solid rgba(0,0,0,.10);
+      position: relative;
+      overflow:hidden;
+    }
+    .ball::after{
+      /* Glanz-Schweif */
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(120deg, transparent 35%, rgba(255,255,255,.65), transparent 60%);
+      transform: translateX(-60%) rotate(12deg);
+      animation: shine var(--shine, 4.5s) ease-in-out infinite;
+      opacity: .55;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(14px); }
+    }
+    @keyframes swing{
+      0%,100%{ rotate: -2.2deg; }
+      50%{ rotate: 2.2deg; }
+    }
+    @keyframes shine{
+      0%{ transform: translateX(-70%) rotate(12deg); }
+      55%{ transform: translateX(15%) rotate(12deg); }
+      100%{ transform: translateX(70%) rotate(12deg); }
+    }
+
+    /* Disco mode = mehr Glitzer + höhere Disco-Layer-Opacity */
+    .disco-mode #sparkles{ opacity: .75; mix-blend-mode: screen; }
+    .disco-mode .disco{ opacity: calc(var(--op, .7) + .15); }
+
+    /* Reduced motion: keine Animation */
+    @media (prefers-reduced-motion: reduce){
+      #sparkles{ display:none; }
+      .disco{ animation: none; }
+      .ball::after{ animation:none; }
+      .btn{ transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="sparkles" aria-hidden="true"></canvas>
+
+  <div class="disco-layer" aria-hidden="true">
+    <!-- Disco balls: Position/Größe per CSS-Variablen -->
+    <div class="disco" style="--size:140px;--x:10%;--y:18%;--float:10s;--swing:7s;--shine:5s;--op:.55;">
+      <div class="ball"></div>
+    </div>
+    <div class="disco" style="--size:110px;--x:78%;--y:12%;--float:8.5s;--swing:6.2s;--shine:4.4s;--op:.45;">
+      <div class="ball"></div>
+    </div>
+    <div class="disco" style="--size:90px;--x:86%;--y:62%;--float:9.5s;--swing:7.5s;--shine:6s;--op:.35;">
+      <div class="ball"></div>
+    </div>
+    <div class="disco" style="--size:120px;--x:18%;--y:70%;--float:11s;--swing:8s;--shine:5.8s;--op:.30;">
+      <div class="ball"></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="brand">
+          <strong>Italo Disco</strong>
+          <span class="badge">STEREO • 1984 • ~120 BPM</span>
+        </div>
+
+        <div class="nav-links">
+          <a href="#abstract">Abstract</a>
+          <a href="#kontext">Kontext</a>
+          <a href="#sound">Sounddesign</a>
+          <a href="#tracks">Track-Cards</a>
+          <a href="#quellen">Quellen</a>
+          <button class="btn neon" id="toggleDisco" type="button" aria-pressed="false">🪩 Discokugel</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card hero" id="top">
+        <div class="laser"></div>
+        <h1>Italo Disco: Ästhetik, Maschine, Sehnsucht (1982–1987)</h1>
+        <p>
+          Eine Seminararbeit als Website: <em>seriös gesetzt</em>, aber mit 80er-Glitzer als
+          „emotionalem Layer“ – Analyse vorn, Discokugel im Hintergrund.
+        </p>
+
+        <div class="meta">
+          <span class="chip">Seminar: Medienkultur</span>
+          <span class="chip">Autorin: Julia</span>
+          <span class="chip">Version: Web-Layout</span>
+          <span class="chip">Stil: Glitter-Academic</span>
+        </div>
+      </section>
+
+      <aside class="card soft toc" aria-label="Inhaltsverzeichnis">
+        <h2>Inhaltsverzeichnis</h2>
+        <ol>
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#kontext">Historischer Kontext</a></li>
+          <li><a href="#sound">Sounddesign (Drum Machines & Synth Bass)</a></li>
+          <li><a href="#persona">Stimme & Persona</a></li>
+          <li><a href="#cover">Cover-Ästhetik</a></li>
+          <li><a href="#koerper">Körper / Club / Flucht</a></li>
+          <li><a href="#tracks">Track Cards</a></li>
+          <li><a href="#quellen">Literatur / Links / Discography</a></li>
+        </ol>
+      </aside>
+
+      <section class="card" id="abstract">
+        <h2>Abstract ✦</h2>
+        <p class="lead">
+          Italo Disco lässt sich als ästhetische Maschine lesen: standardisierte Pattern, starke Oberflächen,
+          und zugleich ein spezifischer Affekt – Sehnsucht, Flucht, Wärme.
+        </p>
+        <p>
+          Diese Arbeit untersucht die Wechselwirkung von Produktionsbedingungen (Synths, Drum Machines, Studios),
+          visueller Oberfläche (Cover, Typographie, Mode) und sozialem Raum (Club, Körper, Rolle).
+          Der Glitzer dieser Website ist nicht Dekoration, sondern Metapher: Oberfläche als Funktion.
+        </p>
+      </section>
+
+      <section class="card" id="kontext">
+        <h2>1. Historischer Kontext</h2>
+        <div class="two-col">
+          <div>
+            <p class="lead">
+              Zwischen Post-Disco, Hi-NRG, Euro-Pop und Studio-Ökonomie entsteht eine Klangsprache,
+              die Wiederholung als Qualität behandelt.
+            </p>
+            <p>
+              (Hier kommt dein Text rein: Labels, italienische Studios, transnationale Vermarktung,
+              Fernsehen, Kassettenkultur, usw.)
+            </p>
+          </div>
+          <div class="sidebar">
+            <h3>Sidebar</h3>
+            <ul class="kv">
+              <li><strong>These:</strong> Oberfläche = Struktur</li>
+              <li><strong>Begriffe:</strong> Pattern, Hook, Persona</li>
+              <li><strong>Beobachtung:</strong> „Maschine“ als Wärme</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="sound">
+        <h2>2. Sounddesign</h2>
+        <div class="two-col">
+          <div>
+            <p class="lead">
+              Kick/Bass als Boden, Synth-Arpeggios als Raster, Hallräume als „Filmset“.
+            </p>
+            <p>
+              (Hier: Analyse von Tempo, typischen Drumsounds, Bass-Voicings, Reverb/Delay-Ästhetik,
+              und wie daraus Emotionalität entsteht.)
+            </p>
+          </div>
+          <div class="sidebar">
+            <h3>Key Patterns</h3>
+            <ul class="kv">
+              <li>4/4 + klare Kick</li>
+              <li>Sidechain-ähnliche Pump-Illusionen</li>
+              <li>Arpeggios als Textur</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="persona">
+        <h2>3. Stimme & Persona</h2>
+        <p class="lead">Stimme als Oberfläche: Akzent, Pathos, Distanz – und gleichzeitig Intimität.</p>
+        <p>(Hier: Vocal-Stil, Englisch/Italienisch, Figuren, „call me tonight“-Semantik, usw.)</p>
+      </section>
+
+      <section class="card" id="cover">
+        <h2>4. Cover-Ästhetik</h2>
+        <p class="lead">Schrift + Foto + Neon: die Semiotik des Futurismus im Taschenformat.</p>
+        <p>(Hier: visuelle Codes, Airbrush, Typo, Posen, Technologie-Ikonen.)</p>
+      </section>
+
+      <section class="card" id="koerper">
+        <h2>5. Körper / Club / Flucht</h2>
+        <p class="lead">Der Club als Raum, in dem Wiederholung nicht Langeweile ist, sondern Regulation.</p>
+        <p>(Hier: Körperlichkeit, Tanz, soziale Rolle, Schutzraum – dein „Gummizelle“-Gedanke passt hier perfekt.)</p>
+      </section>
+
+      <section class="card" id="tracks">
+        <h2>Track Cards</h2>
+        <p class="lead">Kurze, zitierfähige Mini-Analysen – wie Bibliothekskarten mit Neonrand.</p>
+
+        <div class="tracks">
+          <article class="track">
+            <header>
+              <strong>Beispieltrack A</strong>
+              <small>1984 • ~120 BPM</small>
+            </header>
+            <p><em>These:</em> Die Bassline „erdet“, während Synth-Flächen den affektiven Raum öffnen.</p>
+          </article>
+
+          <article class="track">
+            <header>
+              <strong>Beispieltrack B</strong>
+              <small>1983 • ~122 BPM</small>
+            </header>
+            <p><em>Beobachtung:</em> Hook-Repetition als emotionale Stabilisierung, nicht als Reduktion.</p>
+          </article>
+
+          <article class="track">
+            <header>
+              <strong>Beispieltrack C</strong>
+              <small>1985 • ~118 BPM</small>
+            </header>
+            <p><em>Detail:</em> Reverb/Delay baut einen „kinematographischen“ Raum über einfache Harmonien.</p>
+          </article>
+
+          <article class="track">
+            <header>
+              <strong>Beispieltrack D</strong>
+              <small>1982 • ~124 BPM</small>
+            </header>
+            <p><em>Persona:</em> Stimme als Maske: kühl im Ton, warm in der Sehnsucht.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="card" id="quellen">
+        <h2>Quellen</h2>
+        <p class="lead">Literatur / Weblinks / Discography (im Stil eines sauberen Papers).</p>
+        <ul>
+          <li>Literaturquelle 1 …</li>
+          <li>Literaturquelle 2 …</li>
+          <li>Discography …</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p><small>„Analyse vorn, Discokugel hinten.“ — Version 0.1</small></p>
+    </footer>
+  </div>
+
+  <script>
+    // Disco Mode Toggle
+    const btn = document.getElementById('toggleDisco');
+    btn.addEventListener('click', () => {
+      const on = document.body.classList.toggle('disco-mode');
+      btn.setAttribute('aria-pressed', String(on));
+      btn.textContent = on ? '🪩 Discokugel: AN' : '🪩 Discokugel';
+    });
+
+    // Sparkles (Canvas) – sehr leichtgewichtig, respektiert Reduced Motion
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const c = document.getElementById('sparkles');
+    const ctx = c.getContext('2d', { alpha: true });
+
+    function resize(){
+      const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      c.width = Math.floor(window.innerWidth * dpr);
+      c.height = Math.floor(window.innerHeight * dpr);
+      c.style.width = window.innerWidth + 'px';
+      c.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize, { passive: true });
+    resize();
+
+    // Partikel
+    const N = 90;
+    const sparkles = Array.from({length: N}, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: 0.6 + Math.random() * 1.8,
+      a: 0.10 + Math.random() * 0.28,
+      tw: 0.002 + Math.random() * 0.01,
+      vx: (-0.15 + Math.random() * 0.30),
+      vy: (0.05 + Math.random() * 0.25),
+      hue: 290 + Math.random() * 90
+    }));
+
+    let t = 0;
+    function tick(){
+      if (prefersReduced) return;
+
+      t += 1;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+      const discoOn = document.body.classList.contains('disco-mode');
+      const amp = discoOn ? 1.25 : 0.85;
+
+      for (const s of sparkles){
+        s.x += s.vx * amp;
+        s.y += s.vy * amp;
+
+        // wrap
+        if (s.x < -20) s.x = window.innerWidth + 20;
+        if (s.x > window.innerWidth + 20) s.x = -20;
+        if (s.y > window.innerHeight + 20) s.y = -20;
+
+        // twinkle
+        const tw = (Math.sin(t * s.tw) + 1) / 2; // 0..1
+        const alpha = s.a * (0.35 + tw * 0.85) * (discoOn ? 1.1 : 0.95);
+
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${s.hue}, 95%, 70%, ${alpha})`;
+        ctx.arc(s.x, s.y, s.r * (0.8 + tw * 0.9), 0, Math.PI * 2);
+        ctx.fill();
+
+        // tiny cross sparkle sometimes
+        if (tw > 0.92 && discoOn){
+          ctx.strokeStyle = `hsla(${s.hue}, 95%, 80%, ${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(s.x - 5, s.y);
+          ctx.lineTo(s.x + 5, s.y);
+          ctx.moveTo(s.x, s.y - 5);
+          ctx.lineTo(s.x, s.y + 5);
+          ctx.stroke();
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    tick();
+  </script>
+</body>
+</html>
