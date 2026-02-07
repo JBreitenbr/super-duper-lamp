@@ -47,6 +47,129 @@
         linear-gradient(135deg, var(--bg1), var(--bg2) 40%, var(--bg3));
       overflow-x:hidden;
     }
+/* Track analysis module */
+
+.filters{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.pill{
+  border: 1px solid rgba(0,0,0,.12);
+  background: rgba(255,255,255,.7);
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0,0,0,.06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.pill:hover{ transform: translateY(-1px); }
+.pill.is-active{
+  border-color: rgba(255,59,212,.35);
+  box-shadow:
+    0 12px 26px rgba(255,59,212,.10),
+    0 12px 26px rgba(34,211,238,.10);
+}
+
+.track-grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.track-card{
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 14px 34px rgba(0,0,0,.08);
+  overflow: hidden;
+}
+
+.track-head{
+  display:flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  background:
+    radial-gradient(600px 240px at 10% 0%, rgba(255,59,212,.10), transparent 60%),
+    radial-gradient(600px 240px at 80% 20%, rgba(34,211,238,.10), transparent 60%),
+    rgba(255,255,255,.75);
+}
+
+.track-head h3{
+  margin:0;
+  font-size: 16px;
+  letter-spacing: .2px;
+}
+
+.track-meta{
+  margin: 4px 0 0;
+  color: rgba(0,0,0,.62);
+  font-size: 13px;
+}
+
+.tag{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(255,255,255,.75);
+  white-space: nowrap;
+}
+
+.track-body{ padding: 12px 14px 14px; }
+
+.track-cols{
+  display:grid;
+  grid-template-columns: 1.35fr .65fr;
+  gap: 14px;
+  align-items: start;
+}
+
+@media (max-width: 920px){
+  .track-cols{ grid-template-columns: 1fr; }
+}
+
+.track-main p{ margin: 0 0 10px; }
+
+.bullets{
+  margin: 0;
+  padding-left: 18px;
+  color: rgba(0,0,0,.72);
+}
+.bullets li{ margin: 7px 0; }
+
+.track-side{
+  border-radius: 14px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.65);
+  padding: 12px;
+}
+
+.why{
+  margin: 0 0 12px;
+  color: rgba(0,0,0,.70);
+}
+
+.embed{
+  border-top: 1px dashed rgba(0,0,0,.18);
+  padding-top: 10px;
+  color: rgba(0,0,0,.70);
+}
+
+.embed a{
+  color: rgba(0,0,0,.85);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(0,0,0,.35);
+}
+.embed a:hover{ border-bottom-color: rgba(0,0,0,.65); }
 
     /* Sparkle canvas sits behind content but above background */
     #sparkles{
@@ -513,8 +636,379 @@
         <p class="lead">Der Club als Raum, in dem Wiederholung nicht Langeweile ist, sondern Regulation.</p>
         <p>(Hier: Körperlichkeit, Tanz, soziale Rolle, Schutzraum – dein „Gummizelle“-Gedanke passt hier perfekt.)</p>
       </section>
+<section class="card" id="track-analysen">
+  <h2>Track-Analysen</h2>
+  <p class="lead">
+    Beispieltracks als analytische Marker: Oberfläche, Maschine, Persona, Sehnsucht.
+    (Keine Lyrics – nur Analyse.)
+  </p>
 
-      <section class="card" id="tracks">
+  <div class="filters" aria-label="Filter">
+    <button class="pill is-active" data-filter="all">Alle</button>
+    <button class="pill" data-filter="space">Space / Maschine</button>
+    <button class="pill" data-filter="melancholie">Melancholie</button>
+    <button class="pill" data-filter="camp">Camp / Overstatement</button>
+    <button class="pill" data-filter="persona">Persona / Industrie</button>
+    <button class="pill" data-filter="oberflaeche">Oberfläche vs. Text</button>
+  </div>
+
+  <div class="track-grid">
+
+    <!-- 1 -->
+    <article class="track-card" data-tags="melancholie">
+      <header class="track-head">
+        <div>
+          <h3>My Mine — Hypnotic Tango</h3>
+          <p class="track-meta">1983 • Dark Italo • „Nachtmodus“</p>
+        </div>
+        <span class="tag">Melancholie</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Hypnose durch Wiederholung – Spannung ohne große Harmoniewechsel.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> enges Pattern, kontrollierter Hallraum, präziser Drive</li>
+              <li><strong>Persona:</strong> Stimme kühl → Erotik/Bedrohung entsteht indirekt</li>
+              <li><strong>Oberfläche:</strong> Neon-Noir statt „Sommer-Italien“</li>
+              <li><strong>Wirkung:</strong> stabilisiert, ohne fröhlich zu sein</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Italo kann düster sein, ohne Rock zu werden. Minimalismus erzeugt Sog.
+            </p>
+
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="track-card" data-tags="melancholie">
+      <header class="track-head">
+        <div>
+          <h3>Gazebo — I Like Chopin</h3>
+          <p class="track-meta">1983 • Eleganz • „Wohnzimmer-Sehnsucht“</p>
+        </div>
+        <span class="tag">Melancholie</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Kitsch mit Stil – Popballade mit Disco-Antrieb.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> weiche Flächen, klare Struktur, zurückhaltende Drums</li>
+              <li><strong>Persona:</strong> adult, melancholisch, nicht camp</li>
+              <li><strong>Oberfläche:</strong> seriöses Italo – fast „bürgerlich“</li>
+              <li><strong>Wirkung:</strong> tröstlich, nicht aggressiv</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Gegenbeispiel zu „nur Club“: Italo als eleganter Affektträger.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="track-card" data-tags="melancholie">
+      <header class="track-head">
+        <div>
+          <h3>Ryan Paris — Dolce Vita</h3>
+          <p class="track-meta">1983 • Sehnsucht • „Postkarte“</p>
+        </div>
+        <span class="tag">Melancholie</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Sehnsucht als Oberfläche – das Versprechen ist der Inhalt.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> Hook-Architektur, klare Bassline, keine Reibung</li>
+              <li><strong>Persona:</strong> „junger Mann in Italien“ als Fantasie</li>
+              <li><strong>Oberfläche:</strong> Sonne, Freiheit, leichte Melancholie</li>
+              <li><strong>Wirkung:</strong> entlastet durch Einfachheit</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Idealtyp: Italo als Sehnsuchtsmaschine.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="track-card" data-tags="oberflaeche">
+      <header class="track-head">
+        <div>
+          <h3>Righeira — Vamos a la playa</h3>
+          <p class="track-meta">1983 • Oberfläche vs. Text • „Pastell-Dystopie“</p>
+        </div>
+        <span class="tag">Oberfläche</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Katastrophe im Sommerlook – Ironie als 80er-Modus.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> hell, verspielt, sofort tanzbar</li>
+              <li><strong>Persona:</strong> Pop-Clowns mit futuristischem Unterton</li>
+              <li><strong>Oberfläche:</strong> Urlaub, aber semantisch „schwer“</li>
+              <li><strong>Wirkung:</strong> entlastet und irritiert zugleich</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Paradebeispiel: Diskrepanz zwischen Klang und Bedeutung.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="track-card" data-tags="persona">
+      <header class="track-head">
+        <div>
+          <h3>Den Harrow — Don’t Break My Heart</h3>
+          <p class="track-meta">1987 • Pop-Avatar • „Industrie“</p>
+        </div>
+        <span class="tag">Persona</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Persona schlägt Authentizität – Oberfläche als System.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> poliert, hit-orientiert, synthetische Emotionalität</li>
+              <li><strong>Persona:</strong> Figur wichtiger als Sänger-Identität</li>
+              <li><strong>Oberfläche:</strong> Bravo-Poster als Produktionsform</li>
+              <li><strong>Wirkung:</strong> Camp + Sehnsucht in Plastikfolie</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Italo als frühe Pop-Avatar-Logik: Stimme/Look/Marketing sind modular.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="track-card" data-tags="space">
+      <header class="track-head">
+        <div>
+          <h3>Koto — Jabdah</h3>
+          <p class="track-meta">1982 • Space Italo • „Raster“</p>
+        </div>
+        <span class="tag">Space</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Instrumentale Regulation – Flucht ohne Sozialkontakt.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> Arpeggios, klare Synth-Layer, futuristische Effekte</li>
+              <li><strong>Persona:</strong> keine – genau das ist die Pointe</li>
+              <li><strong>Oberfläche:</strong> Weltraum statt Beziehung</li>
+              <li><strong>Wirkung:</strong> ordnet den Kopf, macht Raum</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Italo kann „anti-sozial“ sein: ein akustischer Korridor, der trägt.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="track-card" data-tags="space">
+      <header class="track-head">
+        <div>
+          <h3>Laserdance — Power Run</h3>
+          <p class="track-meta">1987 • Maschine • „Laser“</p>
+        </div>
+        <span class="tag">Space</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Drive als Funktion – Emotion durch Kontrolle.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> strenges Pattern, Tempo, Effekt-Ästhetik</li>
+              <li><strong>Persona:</strong> Technik-Fantasie statt Mensch</li>
+              <li><strong>Oberfläche:</strong> Geschwindigkeit als Utopie</li>
+              <li><strong>Wirkung:</strong> stabilisiert, schneidet durch Realität</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Idealbeispiel für „Maschine als Halt“.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="track-card" data-tags="camp">
+      <header class="track-head">
+        <div>
+          <h3>Fancy — Slice Me Nice</h3>
+          <p class="track-meta">1984 • Camp • „Schamfreiheit“</p>
+        </div>
+        <span class="tag">Camp</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Overstatement als Schutz – Pathos gegen Scham.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> glatte Produktion, klare Hook, dramatische Gesten</li>
+              <li><strong>Persona:</strong> Kunstfigur mit Genuss am Exzess</li>
+              <li><strong>Oberfläche:</strong> Erotik als Theater</li>
+              <li><strong>Wirkung:</strong> entlastet, macht frech</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Trash ist nicht „weniger“ – Trash kann Regulation sein.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="track-card" data-tags="camp">
+      <header class="track-head">
+        <div>
+          <h3>The Flirts — Passion</h3>
+          <p class="track-meta">1982 • Hi-NRG • „Körper“</p>
+        </div>
+        <span class="tag">Camp</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Dancefloor als Ritual – weniger Sehnsucht, mehr Körper.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> direkter, treibender, US/UK-Nähe</li>
+              <li><strong>Persona:</strong> performativ, „girl group“ als Stilmittel</li>
+              <li><strong>Oberfläche:</strong> Club-Energie, nicht Wohnzimmer</li>
+              <li><strong>Wirkung:</strong> aktiviert, bringt Präsenz</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Zeigt die Übergänge: Italo ist kein isoliertes Genre, sondern ein Netzwerk.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+    <!-- 10 -->
+    <article class="track-card" data-tags="melancholie">
+      <header class="track-head">
+        <div>
+          <h3>My Mine — Can Delight</h3>
+          <p class="track-meta">1984 • Neon-Glow • „schimmernd“</p>
+        </div>
+        <span class="tag">Melancholie</span>
+      </header>
+
+      <div class="track-body">
+        <div class="track-cols">
+          <div class="track-main">
+            <p><strong>Kernthese:</strong> Leicht, aber nicht banal – Atmosphäre durch Raum und Pattern.</p>
+            <ul class="bullets">
+              <li><strong>Sound:</strong> klare Layer, Hall als „Glow“, sehr definierte Textur</li>
+              <li><strong>Persona:</strong> weniger noir, mehr schimmernd</li>
+              <li><strong>Oberfläche:</strong> Neonlicht statt Schatten</li>
+              <li><strong>Wirkung:</strong> hebt leicht an, ohne zu kippen</li>
+            </ul>
+          </div>
+
+          <aside class="track-side">
+            <p class="why"><strong>Warum relevant?</strong><br>
+              Kontrasttrack: zeigt die Bandbreite innerhalb derselben Band.
+            </p>
+            <div class="embed">
+              <p><strong>Beispiel-Link</strong></p>
+              <p><a href="#" target="_blank" rel="noopener">YouTube / Spotify</a></p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+   <!--   <section class="card" id="tracks">
         <h2>Track Cards</h2>
         <p class="lead">Kurze, zitierfähige Mini-Analysen – wie Bibliothekskarten mit Neonrand.</p>
 
@@ -551,7 +1045,7 @@
             <p><em>Persona:</em> Stimme als Maske: kühl im Ton, warm in der Sehnsucht.</p>
           </article>
         </div>
-      </section>
+      </section>-->
 
       <section class="card" id="quellen">
         <h2>Quellen</h2>
@@ -651,6 +1145,30 @@
       requestAnimationFrame(tick);
     }
     tick();
+  
+  const pills = document.querySelectorAll('.pill');
+  const cards = document.querySelectorAll('.track-card');
+
+  pills.forEach(p => {
+    p.addEventListener('click', () => {
+      pills.forEach(x => x.classList.remove('is-active'));
+      p.classList.add('is-active');
+
+      const filter = p.dataset.filter;
+
+      cards.forEach(card => {
+        const tags = (card.dataset.tags || "").split(" ").filter(Boolean);
+
+        if (filter === "all" || tags.includes(filter)) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+
+
   </script>
 </body>
 </html>
